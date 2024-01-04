@@ -774,8 +774,6 @@ import {
 terraform plan -generate-config-out=generated.tf
 ```
 
-**DevOps с Nixys | Знакомство с Terraform**
-
 - terraform apply -auto-approve - создание с автоподтверждением
 - terraform fmt - автоформатирование
 - terraform destroy -target yandex_compute_instance.nixys - уничтожение только определенного инстанса
