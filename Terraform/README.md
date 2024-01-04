@@ -1,10 +1,8 @@
 # Terraform
-Terraform
 
 **Инфраструктура как код (IaC)**
 
-**IaC** — модель, по которой процесс настройки инфраструктуры аналогичен процессу программирования ПО. Приложения могут содержать скрипты, которые создают свои
-собственные виртуальные машины и управляют ими. Это основа облачных вычислений и неотъемлемая часть DevOps.
+**IaC** — модель, по которой процесс настройки инфраструктуры аналогичен процессу программирования ПО. Приложения могут содержать скрипты, которые создают свои собственные виртуальные машины и управляют ими. Это основа облачных вычислений и неотъемлемая часть DevOps.
 
 **Недостатки IaC**
 - Разработка IaC может потребовать использования дополнительных утилит, а любые ошибки при таком проектировании могут быть быстро распространены по всем окружениям проекта, поэтому IaC должен быть всесторонне протестирован.
@@ -12,28 +10,13 @@ Terraform
 
 **Проблемы IaC**
 
-1. **В большинстве случаев IaC – это какой-то dsl.** А DSL, в свою очередь, – это описание структуры. В них может не быть таких привычных нам вещей, как:
-- переменные,
-- условия,
-- комментарии (например, JSON),
-- функции,
-- ООП как высокоуровневые конструкции.
-
-В Terraform используется HCL
-
-**HCL** — это язык программирования, разработанный HashiCorp. Он в основном используется DevOps. Представляет собой методологию разработки, предназначенную для ускорения процесса кодирования. HCL используется для настройки программных сред и программных библиотек. HCL совместим с JSON благодаря API HCL. Его дизайн и синтаксис более читабельны.
-
-**2. Гетерогенная среда.**
-
-Обычно вы работаете с одним языком, одним стеком, одной экосистемой. А тут огромное разнообразие технологий. Вполне реальная ситуация, когда баш с питоном запускает какой- то процесс, в который подсовывается Json. Вы его анализируете, потом еще какой-то генератор выдает ещё 30 файлов. Итог прост: нужны эникейщики, а это бывает очень накладно.
-
-**3. Тулинг**
-
-Обычно, есть какая-то крутая штука (tool), позволяющая подсветить ошибку, или то, что можно использовать. Но, как часто бывает, в OpenSource это так не работает. К примеру, проект может состоять из 20-30 файлов, которые используют те или иные объекты друг из друга, но проблема в деталях (где-то забыли про структуру). Тулзы создают, но не всегда успевают за версиями, и тд тп. Хорошо, когда есть что-то типа X-Code, VSCode.
+- **1. В большинстве случаев IaC – это какой-то dsl.** А DSL, в свою очередь, – это описание структуры. В них может не быть таких привычных нам вещей, как: переменные, условия, комментарии (например, JSON), функции, ООП как высокоуровневые конструкции. В Terraform используется **HCL** — это язык программирования, разработанный HashiCorp. Он в основном используется DevOps. Представляет собой методологию разработки, предназначенную для ускорения процесса кодирования. HCL используется для настройки программных сред и программных библиотек. HCL совместим с JSON благодаря API HCL. Его дизайн и синтаксис более читабельны.
+- **2. Гетерогенная среда.** - Обычно вы работаете с одним языком, одним стеком, одной экосистемой. А тут огромное разнообразие технологий. Вполне реальная ситуация, когда баш с питоном запускает какой-то процесс, в который подсовывается Json. Вы его анализируете, потом еще какой-то генератор выдает ещё 30 файлов. Итог прост: нужны эникейщики, а это бывает очень накладно.
+- **3. Тулинг** - Обычно, есть какая-то крутая штука (tool), позволяющая подсветить ошибку, или то, что можно использовать. Но, как часто бывает, в OpenSource это так не работает. К примеру, проект может состоять из 20-30 файлов, которые используют те или иные объекты друг из друга, но проблема в деталях (где-то забыли про структуру). Тулзы создают, но не всегда успевают за версиями, и тд тп. Хорошо, когда есть что-то типа X-Code, VSCode.
 
 Основные игроки: Vagrant, Ansible, Packer, Terraform, SaltStack, Chef
 
-**Terraform** - это программный инструмент с открытым исходным кодом, созданный HashiCorp, который помогает управлять инфраструктурой. Пользователи определяют и предоставляют инфраструктуру центра обработки данных с помощью декларативного языка конфигурации, известного как язык конфигурации HashiCorp (HCL) или, необязательно, JSON.
+**Terraform** - это программный инструмент с открытым исходным кодом, созданный HashiCorp, который помогает управлять инфраструктурой. Пользователи определяют и предоставляют инфраструктуру центра обработки данных с помощью декларативного языка конфигурации, известного как язык конфигурации HashiCorp (HCL) или необязательно, JSON.
 
 **Terraform: особенности**
 - оркестрирование, а не просто конфигурация инфраструктуры;
@@ -41,26 +24,13 @@ Terraform
 - декларативный, а не процедурный код;
 - архитектура, работающая на стороне клиента
 
-**Оркестрирование** — автоматизированный процесс управления связанными сущностями, такими как группы виртуальных машин или контейнеров. Terraform сконцентрирован на задачах по созданию серверов с нуля, оставляя работу по размещению контейнеров с ПО платформам типа Docker или Packer. Когда вся инфраструктура вашей облачной экосистемы работает как код, и все параметры записаны в декларативные файлы конфигурации, специалисты вашей команды могут работать с ними и изменять эти файлы, как и любой другой код.
-
-**Неизменяемая VS одноразовая**
-
-Основное отличие состоит в том, что неизменяемая инфраструктура привязана к железу, программе, компонентам в ней, а если нам что-то надо изменить, то мы каждый раз создаем новую инфраструктуру. Одноразовость заключается в том, что если она стала не нужна, то ее просто удалить. Жизненный цикл закончился, за нее не держимся, а просто убираем.
-
-**Неизменяемая инфраструктура**
-
-Terraform работает по концепции неизменяемой инфраструктуры, где каждое изменение какого-либо компонента (обновление ПО, удаление или добавление компонентов, и т.д.) приводит к созданию отдельного состояния инфраструктуры, то есть к построению новой системы и удалению предыдущей конфигурации. Это означает, что процесс обновления ПО идет легко и быстро по всей системе сразу и защищен от возможных ошибок.
-
-**Декларативный код**
-
-При помощи Terraform, вы просто указываете утилите, какие изменения нужно произвести с ТЕКУЩИМ состоянием системы, что позволяет обходиться довольно компактной и очень простой библиотекой шаблонов кода. При использовании Chef или Ansible вы вынуждены писать пошаговые процедурные инструкции по достижению требуемого состояния системы. Напротив, Terraform, Salt или Puppet предпочитают отписывать конечные состояния системы, оставляя конфигурацию на усмотрение утилиты.
-
-**Архитектура, работающая на стороне клиента**
-
-Terraform использует API, предоставляемые поставщиком облачного хостинга. С их помощью утилита строит инфраструктуру, что означает: уход от излишних проверок безопасности, отсутствие необходимости в работе отдельного сервера для управления конфигурациями и выделение ресурсов на работу многочисленных программ-агентов.
+- **Оркестрирование** — автоматизированный процесс управления связанными сущностями, такими как группы виртуальных машин или контейнеров. Terraform сконцентрирован на задачах по созданию серверов с нуля, оставляя работу по размещению контейнеров с ПО платформам типа Docker или Packer. Когда вся инфраструктура вашей облачной экосистемы работает как код, и все параметры записаны в декларативные файлы конфигурации, специалисты вашей команды могут работать с ними и изменять эти файлы, как и любой другой код.
+- **Неизменяемая VS одноразовая** - Основное отличие состоит в том, что неизменяемая инфраструктура привязана к железу, программе, компонентам в ней, а если нам что-то надо изменить, то мы каждый раз создаем новую инфраструктуру. Одноразовость заключается в том, что если она стала не нужна, то ее просто удалить. Жизненный цикл закончился, за нее не держимся, а просто убираем.
+- **Неизменяемая инфраструктура** - Terraform работает по концепции неизменяемой инфраструктуры, где каждое изменение какого-либо компонента (обновление ПО, удаление или добавление компонентов, и т.д.) приводит к созданию отдельного состояния инфраструктуры, то есть к построению новой системы и удалению предыдущей конфигурации. Это означает, что процесс обновления ПО идет легко и быстро по всей системе сразу и защищен от возможных ошибок.
+- **Декларативный код** - При помощи Terraform, вы просто указываете утилите, какие изменения нужно произвести с ТЕКУЩИМ состоянием системы, что позволяет обходиться довольно компактной и очень простой библиотекой шаблонов кода. При использовании Chef или Ansible вы вынуждены писать пошаговые процедурные инструкции по достижению требуемого состояния системы. Напротив, Terraform, Salt или Puppet предпочитают отписывать конечные состояния системы, оставляя конфигурацию на усмотрение утилиты.
+- **Архитектура, работающая на стороне клиента** - Terraform использует API, предоставляемые поставщиком облачного хостинга. С их помощью утилита строит инфраструктуру, что означает: уход от излишних проверок безопасности, отсутствие необходимости в работе отдельного сервера для управления конфигурациями и выделение ресурсов на работу многочисленных программ-агентов.
 
 **Недостатки Terraform**
-
 - Так как Terraform появился относительно недавно, он еще далеко не идеален.
 - Как дирижерскую палочку может использовать только один дирижер, так и Terraform желательно использовать одному оператору или хотя бы с одного терминала.
 - Утилита была разработана только под облако и непригодна для использования с кластерами выделенных серверов.
@@ -120,15 +90,14 @@ terraform init
 Terraform использует конфигурационные файлы с расширением .tf.
 
 Заносим минимальный набор переменных для успешного подключения:
-```
+```tf
 provider "Имя провайдера" {
-user = "ваш_логин"
-password = "ваш_пароль"
-org = "название_организации"
-url = "название сайта с api "
+  user = "ваш_логин"
+  password = "ваш_пароль"
+  org = "название_организации"
+  url = "название сайта с api "
 }
 ```
-
 Сохраняем конфигурацию, и пробуем подключиться:
 ```
 terraform init
@@ -145,13 +114,13 @@ https://github.com/wallarm/terraform-example/tree/master/terraform
 - Строки могут интерполировать другие значения, используя синтаксис, заключенный в ${} , например ${var.foo} .
 - Многострочные конструкции могут использовать синтаксис «здесь, документ» в стиле оболочки, при этом строка начинается с маркера типа <<EOF , а затем строка заканчивается на EOF в отдельной строке. Строки и конечный маркер не должны иметь отступа.
 - Предполагается, что числа имеют основание 10. Если вы поставите перед числом префикс 0x , оно будет рассматриваться как шестнадцатеричное число.
-- Логические значения: true , false .
+- Логические значения: true, false.
 - Списки примитивных типов можно составлять с помощью квадратных скобок ( [] ). Пример: ["foo", "bar", "baz"] .
 - Карты могут быть сделаны с фигурными скобками ( {} ) и двоеточие ( : ): { "foo": "bar", "bar": "baz" } . Кавычки могут быть опущены на ключах, если ключ не начинается с числа, и в этом случае кавычки требуются. Для однострочных карт необходимы запятые между парами ключ/значение. В многострочных картах достаточно новой строки между парами ключ/значение.
 
 **Переменные User string**
 
-var. префикс, за которым следует имя переменной. Например, ${var.foo} интерполирует значение переменной foo .
+var. префикс, за которым следует имя переменной. Например, ${var.foo} интерполирует значение переменной foo.
 
 **Переменные карты пользователя**
 
@@ -182,7 +151,6 @@ subnet = "${var.env == "production" ? var.prod_subnet : var.dev_subnet}"
 - Приоритеты операторов — это стандартный математический порядок операций: умножение ( * ), деление ( / ) и модуль ( % ) имеют приоритет над сложением ( + ) и вычитанием ( - ). Круглые скобки могут использоваться для принудительного упорядочивания.
 
 # Terraform2
-Terraform
 
 **Простейшая конфигурация состоит из четырех файлов:**
 - main.tf — основной конфиг, описывающий какие инстансы нам нужны;
@@ -200,8 +168,8 @@ provider "yandex" {
 }
 ```
 **Providers** (конкретное облако — GCP, DO, AWS, YANDEX и др.):
-- содержат настройки аутентификации и подключения к платформе или сервису,
-- предоставляют набор ресурсов для управления,
+- содержат настройки аутентификации и подключения к платформе или сервису
+- предоставляют набор ресурсов для управления
 - установка провайдера производится командой: terraform init 
 ```tf
 resource "yandex_vpc_subnet" "subnet_a" {
@@ -267,20 +235,13 @@ $ terraform output
 app_external_ip = 104.199.54.241
 ```
 **Основные команды**
-
 - Для приведения системы в целевое состояние используется команда: **terraform -auto-approve=true apply** — идемпотентна!
 - Для просмотра изменений, которые будут применены: **terraform plan**
 - Для обновления конфигурации: **terraform refresh**
 - Для просмотра выходных переменных: **terraform output**
 - Для пересоздания ресурса: **terraform taint yandex_compute_instance.app**
-- Для просмотра выходных переменных: **terraform output**
-- Для пересоздания ресурса: **terraform taint yandex_compute_instance.app**
 
-**Yandex.Cloud** — это набор связанных сервисов, доступных через интернет, которые помогают быстро и безопасно взять в аренду вычислительные мощности в тех объемах, в которых это необходимо. Такой подход к потреблению вычислительных ресурсов называется облачные вычисления.
-
-Облачные вычисления заменяют и дополняют традиционные дата-центры, расположенные на территории потребителя. Yandex.Cloud берет на себя задачи по поддержанию работоспособности и производительности аппаратного и программного обеспечения облачной платформы.
-
-Yandex.Cloud предлагает различные категории облачных ресурсов: например, виртуальные машины, диски, базы данных. Управлять ресурсами каждой категории можно с помощью соответствующего сервиса. Список сервисов в составе Yandex.Cloud - https://cloud.yandex.ru/docs/overview/concepts/services
+**Yandex.Cloud** — это набор связанных сервисов, доступных через интернет, которые помогают быстро и безопасно взять в аренду вычислительные мощности в тех объемах, в которых это необходимо. Такой подход к потреблению вычислительных ресурсов называется облачные вычисления. Облачные вычисления заменяют и дополняют традиционные дата-центры, расположенные на территории потребителя. Yandex.Cloud берет на себя задачи по поддержанию работоспособности и производительности аппаратного и программного обеспечения облачной платформы. Yandex.Cloud предлагает различные категории облачных ресурсов: например, виртуальные машины, диски, базы данных. Управлять ресурсами каждой категории можно с помощью соответствующего сервиса. Список сервисов в составе Yandex.Cloud - https://cloud.yandex.ru/docs/overview/concepts/services
 
 **Метки ресурсов сервисов**
 
@@ -292,13 +253,11 @@ Yandex.Cloud предлагает различные категории обла
 - Длина — от 1 до 63 символов.
 
 **Создание инфраструктуры**
-
-Первым делом нужно сделать две вещи. Первая: создать сервисный аккаунт (https://cloud.yandex.ru/docs/iam/operations/sa/create) с ролью editor на каталог, указанный в настройках провайдера.
-
-Вторая: получить статический ключ доступа (https://cloud.yandex.ru/docs/iam/concepts/authorization/access-key). Сохранить идентификатор ключа и секретный ключ, они понадобятся в следующих разделах инструкции.
+- создать сервисный аккаунт (https://cloud.yandex.ru/docs/iam/operations/sa/create) с ролью editor на каталог, указанный в настройках провайдера.
+- получить статический ключ доступа (https://cloud.yandex.ru/docs/iam/concepts/authorization/access-key). Сохранить идентификатор ключа и секретный ключ, они понадобятся в следующих разделах инструкции.
 
 Создаем файл main.tf
-```
+```tf
 terraform {
   required_providers {
     yandex = {
@@ -327,7 +286,7 @@ provider "yandex" {
 Машины автоматически получат публичные IP-адреса и приватные IP-адреса из диапазона 192.168.10.0/24 в подсети subnet-1, находящейся в зоне доступности ru-central1-a и принадлежащей облачной сети network-1
 
 Конфигурации ресурсов задаются сразу после конфигурации провайдера:
-```
+```tf
 resource “yandex_compute_instance” “vm-1” {
   name = “terraform1”
   resources {
@@ -353,7 +312,6 @@ users:
     sudo: [‘ALL=(ALL) NOPASSWD:ALL’]
     ssh-authorized-keys:
       - ssh-rsa xxxxxxxxxx xxxx@example.com
-      - ssh-rsa yyyyyyyyyy yyyy@desktop
 ```
 В файле main.tf вместо ssh-keys задайте параметр user-data и укажите путь к файлу с метаданными:
 ```
@@ -364,16 +322,14 @@ metadata = {
     user-data = “${file(“./meta.txt”)}”
 }
 ```
-**Проверьте и отформатируйте файлы конфигураций**
-
-Проверьте конфигурацию командой: terraform validate
+**Проверьте и отформатируйте файлы конфигураций** - Проверьте конфигурацию командой: **terraform validate**
 
 Если конфигурация является допустимой, появится сообщение:
 ```
 root@Netalogy:/home/user/terraform/test# terraform validate Success! The
 configuration is valid.
 ```
-Отформатируйте файлы конфигураций в текущем каталоге и подкаталогах: terraform fmt
+Отформатируйте файлы конфигураций в текущем каталоге и подкаталогах: **terraform fmt**
 ```
 root@Netalogy:/home/user/terraform/test# terraform ftm main.tf
 ```
@@ -402,77 +358,9 @@ Apply complete! Resources: 4 added, 0 changed, 0 destroyed.
 - https://cloud.yandex.ru/docs/tutorials/infrastructure-management/packer-quickstart
 - https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs
 
-main.tf
-```tf
-terraform {
-  required_providers {
-    yandex = {
-      source = "yandex-cloud/yandex"
-    }
-  }
-  required_version = ">= 0.13"
-}
-
-
-provider "yandex" {
-  token     = "token"
-  cloud_id  = "cloud_id"
-  folder_id = "folder_id"
-  zone = "ru-central1-b"
-}
-
-resource "yandex_compute_instance" "vm-1" {
-  count = 2
-  name  = "mysql-${count.index}"
-  platform_id = var.platform_id
-  resources {
-  core_fraction = 20
-  cores     = 2
-  memory    = 2
-  }
-
-  boot_disk {
-    initialize_params {
-      image_id = "fd8dvus8s5qjad7td8p4"
-    }
-  }
-  network_interface {
-    subnet_id = yandex_vpc_subnet.subnet-1.id
-    nat       = true
-  }
-
-  metadata = {
-    user-data = "${file("./meta.yml")}"
-  }
-}
-
-resource "yandex_vpc_network" "network-1" {
-  name = "network1"
-}
-
-resource "yandex_vpc_subnet" "subnet-1" {
-  name           = "subnet1"
-  zone           = "ru-central1-b"
-  v4_cidr_blocks = ["192.168.10.0/24"]
-  network_id     = "${yandex_vpc_network.network-1.id}"
-}
-
-```
-meta.yml
-```yml
-#cloud-config
-users:
-  - name: joos
-    groups: sudo
-    shell: /bin/bash
-    sudo: ['ALL=(ALL) NOPASSWD:ALL']
-    ssh-authorized-keys:
-      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAB...OO080HJ8VxJxRNczzDh+glJFBcUsABepV/czGU=
-```
-
 # Terraform3
-Terraform
 
+Установка
 ```bash
 wget https://hashicorp-releases.yandexcloud.net/terraform/1.5.4/terraform_1.5.4_linux_amd64.zip
 zcat terraform_1.5.4_linux_amd64.zip > terraform
@@ -508,58 +396,8 @@ provider "yandex" {
   zone = "ru-central1-a"
 }
 ```
-```
-terraform init
-```
-**main.tf - пример**
-```tf
-terraform {
-  required_providers {
-    yandex   = {
-      source = "yandex-cloud/yandex"
-    }
-  }
-}
-provider "yandex" {
-  token     = "oauth_token"
-  cloud_id  = "cloud_id"
-  folder_id = "folder_id"
-  zone = "ru-central1-b"
-}
-resource "yandex_compute_instance" "vm-1" {
-  name        = "terraform1"
-  platform_id = "standard-v3"
-  resources {
-    core_fraction = 20
-    cores     = 2
-    memory    = 2
-  }
-  boot_disk {
-    initialize_params {
-      image_id = "fd8dvus8s5qjad7td8p4"
-    }
-  }
-  network_interface {
-    subnet_id = yandex_vpc_subnet.subnet-1.id
-    nat       = true
-  }
-  metadata = {
-    user-data = "${file("./my.sh")}"
-  }
-}
+**terraform init**
 
-resource "yandex_vpc_network" "network-1" {
-  name = "network1"
-}
-
-resource "yandex_vpc_subnet" "subnet-1" {
-  name           = "subnet1"
-  zone           = "ru-central1-b"
-  v4_cidr_blocks = ["192.168.10.0/24"]
-  network_id     = "${yandex_vpc_network.network-1.id}"
-}
-
-```
 **Создаем 3 компьютера**
 ```tf
 variable "name" {
@@ -646,12 +484,12 @@ templatefile("my.tpl",{f_name = "John", l_name = "Os", names = ["Vasja","Petja",
 ```tf
 не дает удалять сервер или компоненты
 lifecycle {
-prevent_destroy = true
+  prevent_destroy = true
 }
 
 игнорирует изменения и не перезапускает сервер
 lifecycle {
-ignore_changes = ["user_date"]
+  ignore_changes = ["user_date"]
 }
 
 Создаем и привязываем статический ip и настройка - сначало поднимаем, потом убиваем сервер
@@ -659,7 +497,7 @@ resource "aws_eip" "my_static_ip" {
 instance = aws_instance.my_server.id
 }
 lifecycle {
-create_before_destroy = true
+  create_before_destroy = true
 }
 ```
 **outputs.tf**
@@ -766,7 +604,7 @@ variable "look" {
         "dev" = "standard-v1"
     }
 
-platform_id = lookup(var.look, "prod") = platform_id = lookup(var.look, var.env)
+platform_id = lookup(var.look, var.env)
 
 ```
 **Использование циклов - count, for**
@@ -776,7 +614,6 @@ platform_id = lookup(var.look, "prod") = platform_id = lookup(var.look, var.env)
 variable "aws_users" {
   default = ["petja", "vasja", "kolja", "otto", "maga", "john", "joos"]
 }
-
 
 resource "aws_iam_user" "users" {
   count = length(var.aws_users)
@@ -937,662 +774,13 @@ import {
 terraform plan -generate-config-out=generated.tf
 ```
 
-# Terraform4
-Terraform - youtube
-
-Terraform за 25 минут
-
-default.tf
-```tf
-terraform {
-  required_providers {
-    yandex = {
-      source = "yandex-cloud/yandex"
-    }
-  }
-  required_version = ">= 0.13"
-}
-
-locals {
-  cloud_id  = "b1gmtujeraulvnf2bj1i"
-  folder_id = "b1ghauke2h8p27vt648a"
-}
-
-provider "yandex" {
-    cloud_id = local.cloud_id
-    folder_id = local.folder_id
-    service_account_key_file = "/Users/joos/Downloads/authorized_key.json"
-}
-```
-
-main.tf
-```tf
-locals {
-  bucket_name = "tf-intro-site-bucket-1"
-  index = "index.html"
-}
-
-resource "yandex_iam_service_account" "sa" {
-  folder_id = local.folder_id
-  name = "tf-test-sa"
-}
-
-// Назначение роли сервисному аккаунту
-resource "yandex_resourcemanager_folder_iam_member" "sa-editor" {
-  folder_id = local.folder_id
-  role      = "storage.admin"
-  member    = "serviceAccount:${yandex_iam_service_account.sa.id}"
-}
-
-// Создание статического ключа доступа
-resource "yandex_iam_service_account_static_access_key" "sa-static-key" {
-  service_account_id = yandex_iam_service_account.sa.id
-  description        = "static access key for object storage"
-}
-
-// Создание бакета с использованием ключа
-resource "yandex_storage_bucket" "test" {
-  access_key = yandex_iam_service_account_static_access_key.sa-static-key.access_key
-  secret_key = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
-  bucket     = local.bucket_name
-  acl = "public-read"
-
-  website {
-    index_document = local.index
-  }
-}
-
-// ресурс странички
-resource "yandex_storage_object" "index" {
-  access_key = yandex_iam_service_account_static_access_key.sa-static-key.access_key
-  secret_key = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
-  acl = "public-read"
-  bucket     = yandex_storage_bucket.test.id
-  key        = local.index
-  #source     = "site/${local.index}"
-  content_base64 = base64encode(local.index_template)
-  content_type = "text/html"
-}
-
-// ресурс картинки
-resource "yandex_storage_object" "img" {
-  access_key = yandex_iam_service_account_static_access_key.sa-static-key.access_key
-  secret_key = yandex_iam_service_account_static_access_key.sa-static-key.secret_key
-  acl        = "public-read"
-  bucket     = yandex_storage_bucket.test.id
-  key        = each.key
-  source     = "site/${each.key}"
-  for_each   = fileset("site", "img/*")
-}
-
-// создаем переменную шаблон и передаем туда переменную
-locals {
-  index_template = templatefile("site/${local.index}.tpl", {
-    endpoint = yandex_storage_bucket.test.website_endpoint
-  })
-}
-
-output "site_name" {
-  value = yandex_storage_bucket.test.website_endpoint
-}
-```
-index.html -> index.html.tpl
-```html
-<html>
-<head>
-    <title>My first page</title>
-</head>
-<body>
-    <h1>Hello Cats!</h1>
-    
-    <p><img src="img/cat1.jpg"></p>
-
-    Site endpoint ${endpoint}
-
-</body>
-
-</html>
-```
-
-
 **DevOps с Nixys | Знакомство с Terraform**
 
-terraform apply -auto-approve - создание с автоподтверждением
-
-terraform fmt - автоформатирование
-
-terraform destroy -target yandex_compute_instance.nixys - уничтожение только определенного инстанса
-
-.tf - файлы конфигурации
-
-.tfvars - файлы переменных
-
-.tfstate - файлы текущего состояния инфраструктуры
-
-.terraform - скаченные провайдеры, указанный в конфигурации
-
-.terraform.lock.hcl - описываются зависимости модулей и провайдеров
-
-main.tf - пример поднятия веб сервера через скрипт
-```tf
-terraform {
-  required_providers {
-    yandex = {
-      source = "yandex-cloud/yandex"
-    }
-  }
-  required_version = ">= 0.13"
-
-    // сохраняем terraform1.tfstate на сервере
-    backend "s3" {
-    endpoint   = "storage.yandexcloud.net"
-    bucket     = "test-joos"
-    region     = "ru-central1"
-    key        = "terraform1.tfstate"
-    shared_credentials_file = "storage.key"
-
-    skip_region_validation      = true
-    skip_credentials_validation = true
-  }
-}
-
-provider "yandex" {
-  service_account_key_file = "/Users/joos/MyTerraform/25min/authorized_key.json"
-  cloud_id                 = "b1gmtujeraulvnf2bj1i"
-  folder_id                = "b1ghauke2h8p27vt648a"
-  zone                     = "ru-central1-b"
-}
-
-//сеть
-resource "yandex_vpc_network" "test-vpc" {
-  name = "nixys"
-}
-
-//подсеть
-resource "yandex_vpc_subnet" "test-subnet" {
-  v4_cidr_blocks = ["10.2.0.0/16"]
-  network_id     = "${yandex_vpc_network.test-vpc.id}"
-}
-
-// создаем группу безопасности
-resource "yandex_vpc_security_group" "test-sg" {
-  name        = "Test security group"
-  description = "Description for security group"
-  network_id  = "${yandex_vpc_network.test-vpc.id}"
-
-  dynamic "ingress" {
-    for_each = ["80", "8080"]
-    content {
-      protocol       = "TCP"
-      description    = "Rule description 1"
-      v4_cidr_blocks = ["0.0.0.0/0"]
-      from_port      = ingress.value
-      to_port        = ingress.value
-    }
-  }
-
-  egress {
-    protocol       = "ANY"
-    description    = "Rule description 2"
-    v4_cidr_blocks = ["0.0.0.0/0"]
-    from_port      = 0
-    to_port        = 65535
-  }
-}
-
-// делаем статический адрес
-resource "yandex_vpc_address" "test-ip" { 
-  name = "justAdress"
-  external_ipv4_address {
-    zone_id = "ru-central1-b"
-  }  
-}
-
-// создаем компьютер
-resource "yandex_compute_instance" "nixys" {
-  name  = "nixys"
-  platform_id = "standard-v3"
-
-  resources {
-  core_fraction = 20
-  cores     = 2
-  memory    = 2
-  }
-
-  boot_disk {
-    initialize_params {
-      image_id = "fd81ojtctf7kjqa3au3i"
-    }
-  }
-  network_interface {
-    subnet_id = yandex_vpc_subnet.test-subnet.id
-    nat       = true
-    nat_ip_address = yandex_vpc_address.test-ip.external_ipv4_address.0.address
-  }
-  
-  // для подключения пользователя и исполняемый файл
-  metadata = {
-    ssh-keys = "debian:${file("/Users/joos/.ssh/id_rsa.pub")}"
-    user-data = "${file("./init.sh")}"
-  }
-}
-
-// выводы
-output "external_ip" {
-  value = yandex_vpc_address.test-ip.external_ipv4_address.0.address
-}
-
-output "external_ip2" {
-  value = yandex_compute_instance.nixys.network_interface.0.nat_ip_address
-}
-```
-init.sh
-```sh
-#!/bin/bash
-
-### Install
-
-apt-get update && apt-get install -y apt-transport-https ca-certificates curl software-properties-common nginx
-echo "<h2>Joos</h2>" > /var/www/html/index.html
-sudo service nginx start
-```
-storage.key  - сервисные аккаунты - аккаунт - создать новый статический ключ
-```key
-[default]
-  aws_access_key_id = user.key1
-  aws_secret_access_key = user.key2
-```
-
-main.tf - пример кластера с nginx с автомасштабированием
-```tf
-terraform {
-  required_providers {
-    yandex = {
-      source = "yandex-cloud/yandex"
-    }
-  }
-
-    // сохраняем terraform1.tfstate на сервере
-    backend "s3" {
-    endpoint   = "storage.yandexcloud.net"
-    bucket     = "test-joos"
-    region     = "ru-central1"
-    key        = "terraform_kub.tfstate"
-    shared_credentials_file = "storage.key"
-
-    skip_region_validation      = true
-    skip_credentials_validation = true
-  }
-}
-
-provider "yandex" {
-  service_account_key_file = "/Users/joos/MyTerraform/25min/authorized_key.json"
-  cloud_id                 = "b1gmtujeraulvnf2bj1i"
-  folder_id                = "b1ghauke2h8p27vt648a"
-  zone                     = "ru-central1-b"
-}
-
-# Переменные
-locals {
-  cloud_id    = "b1gmtujeraulvnf2bj1i"
-  folder_id   = "b1ghauke2h8p27vt648a"
-  k8s_version = "1.24"
-  sa_name     = "myaccount"
-}
-# Сеть
-resource "yandex_vpc_network" "mynet" {
-  name = "mynet"
-}
-# Подсети
-resource "yandex_vpc_subnet" "mysubnet-a" {
-  v4_cidr_blocks = ["10.5.0.0/16"]
-  zone           = "ru-central1-a"
-  network_id     = yandex_vpc_network.mynet.id
-}
-
-resource "yandex_vpc_subnet" "mysubnet-b" {
-  v4_cidr_blocks = ["10.6.0.0/16"]
-  zone           = "ru-central1-b"
-  network_id     = yandex_vpc_network.mynet.id
-}
-
-resource "yandex_vpc_subnet" "mysubnet-c" {
-  v4_cidr_blocks = ["10.7.0.0/16"]
-  zone           = "ru-central1-c"
-  network_id     = yandex_vpc_network.mynet.id
-}
-# Группы безопасности
-resource "yandex_vpc_security_group" "k8s-main-sg" {
-  name        = "k8s-main-sg"
-  description = "Правила группы обеспечивают базовую работоспособность кластера Managed Service for Kubernetes. Примените ее к кластеру Managed Service for Kubernetes и группам узлов."
-  network_id  = yandex_vpc_network.mynet.id
-  ingress {
-    protocol          = "TCP"
-    description       = "Правило разрешает проверки доступности с диапазона адресов балансировщика нагрузки. Нужно для работы отказоустойчивого кластера Managed Service for Kubernetes и сервисов балансировщика."
-    predefined_target = "loadbalancer_healthchecks"
-    from_port         = 0
-    to_port           = 65535
-  }
-  ingress {
-    protocol          = "ANY"
-    description       = "Правило разрешает взаимодействие мастер-узел и узел-узел внутри группы безопасности."
-    predefined_target = "self_security_group"
-    from_port         = 0
-    to_port           = 65535
-  }
-  ingress {
-    protocol          = "ANY"
-    description       = "Правило разрешает взаимодействие под-под и сервис-сервис. Укажите подсети вашего кластера Managed Service for Kubernetes и сервисов."
-    v4_cidr_blocks    = concat(yandex_vpc_subnet.mysubnet-a.v4_cidr_blocks, yandex_vpc_subnet.mysubnet-b.v4_cidr_blocks, yandex_vpc_subnet.mysubnet-c.v4_cidr_blocks)
-    from_port         = 0
-    to_port           = 65535
-  }
-  ingress {
-    protocol          = "ICMP"
-    description       = "Правило разрешает отладочные ICMP-пакеты из внутренних подсетей."
-    v4_cidr_blocks    = ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
-  }
-  ingress {
-    protocol          = "TCP"
-    description       = "Правило разрешает входящий трафик из интернета на диапазон портов NodePort. Добавьте или измените порты на нужные вам."
-    v4_cidr_blocks    = ["0.0.0.0/0"]
-    from_port         = 30000
-    to_port           = 32767
-  }
-    ingress {
-    protocol          = "TCP"
-    description       = "Правило разрешает входящий трафик из интернета на диапазон портов NodePort. Добавьте или измените порты на нужные вам."
-    v4_cidr_blocks    = ["0.0.0.0/0"]
-    port         = 443
-  }
-  egress {
-    protocol          = "ANY"
-    description       = "Правило разрешает весь исходящий трафик. Узлы могут связаться с Yandex Container Registry, Yandex Object Storage, Docker Hub и т. д."
-    v4_cidr_blocks    = ["0.0.0.0/0"]
-    from_port         = 0
-    to_port           = 65535
-  }
-}
-# Создание сервисного аккаунта
-resource "yandex_iam_service_account" "myaccount" {
-  name        = local.sa_name
-  description = "K8S regional service account"
-}
-# Назначение ролей
-resource "yandex_resourcemanager_folder_iam_member" "editor" {
-  # Сервисному аккаунту назначается роль "editor".
-  folder_id = local.folder_id
-  role      = "admin"
-  member    = "serviceAccount:${yandex_iam_service_account.myaccount.id}"
-}
-
-resource "yandex_resourcemanager_folder_iam_member" "images-puller" {
-  # Сервисному аккаунту назначается роль "container-registry.images.puller".
-  folder_id = local.folder_id
-  role      = "container-registry.images.puller"
-  member    = "serviceAccount:${yandex_iam_service_account.myaccount.id}"
-}
-
-resource "yandex_kms_symmetric_key" "kms-key" {
-  # Ключ для шифрования важной информации, такой как пароли, OAuth-токены и SSH-ключи.
-  name              = "kms-key"
-  default_algorithm = "AES_128"
-  rotation_period   = "8760h" # 1 год.
-}
-
-resource "yandex_resourcemanager_folder_iam_member" "viewer" {
-  folder_id = local.folder_id
-  role      = "viewer"
-  member    = "serviceAccount:${yandex_iam_service_account.myaccount.id}"
-}
-
-# Создание кластера
-resource "yandex_kubernetes_cluster" "k8s-regional" {
-  network_id = yandex_vpc_network.mynet.id
-  network_policy_provider = "CALICO"
-  master {
-    version = local.k8s_version
-    public_ip = true
-    regional {
-      region = "ru-central1"
-      # задействуем 3 подсети
-      location {
-        zone      = yandex_vpc_subnet.mysubnet-a.zone
-        subnet_id = yandex_vpc_subnet.mysubnet-a.id
-      }
-      location {
-        zone      = yandex_vpc_subnet.mysubnet-b.zone
-        subnet_id = yandex_vpc_subnet.mysubnet-b.id
-      }
-      location {
-        zone      = yandex_vpc_subnet.mysubnet-c.zone
-        subnet_id = yandex_vpc_subnet.mysubnet-c.id
-      }
-    }
-    security_group_ids = [yandex_vpc_security_group.k8s-main-sg.id]
-  }# Используем сервисные аккаунты
-  service_account_id      = yandex_iam_service_account.myaccount.id
-  node_service_account_id = yandex_iam_service_account.myaccount.id
-  depends_on = [# Указываем последовательность создания ресурсов
-    yandex_resourcemanager_folder_iam_member.editor,
-    yandex_resourcemanager_folder_iam_member.images-puller
-  ]
-  kms_provider {
-    key_id = yandex_kms_symmetric_key.kms-key.id
-  }
-}
-
-# Создаем группы нод
-resource "yandex_kubernetes_node_group" "my_node_group_a" {
-  cluster_id  = "${yandex_kubernetes_cluster.k8s-regional.id}"
-  name        = "worker-a"
-  description = "description"
-  version     = local.k8s_version
-
-  labels = {
-    "key" = "value"
-  }
-
-  instance_template {
-    platform_id = "standard-v3"
-    name = "worker-a-{instance.short_id}"
-
-    network_interface {
-      nat                = true
-      subnet_ids         = [yandex_vpc_subnet.mysubnet-a.id]
-      security_group_ids = [yandex_vpc_security_group.k8s-main-sg.id]
-    }
-
-    resources {
-      memory = 2
-      cores  = 2
-    }
-
-    boot_disk {
-      type = "network-hdd"
-      size = 20
-    }
-
-    scheduling_policy {
-      preemptible = false
-    }
-
-  }
-
-  scale_policy {
-    auto_scale {
-      min     = 1
-      max     = 3
-      initial = 1
-    }
-  }
-
-  allocation_policy {
-    location {
-      zone = "ru-central1-a"
-    }
-  }
-}
-
-resource "yandex_kubernetes_node_group" "my_node_group_b" {
-  cluster_id  = "${yandex_kubernetes_cluster.k8s-regional.id}"
-  name        = "worker-b"
-  description = "description"
-  version     = local.k8s_version
-
-  labels = {
-    "key" = "value"
-  }
-
-  instance_template {
-    platform_id = "standard-v3"
-    name = "worker-b-{instance.short_id}"
-
-    network_interface {
-      nat                = true
-      subnet_ids         = [yandex_vpc_subnet.mysubnet-b.id]
-      security_group_ids = [yandex_vpc_security_group.k8s-main-sg.id]
-    }
-
-    resources {
-      memory = 2
-      cores  = 2
-    }
-
-    boot_disk {
-      type = "network-hdd"
-      size = 32
-    }
-
-    scheduling_policy {
-      preemptible = false
-    }
-
-  }
-
-  scale_policy {
-    auto_scale {
-      min     = 1
-      max     = 3
-      initial = 1
-    }
-  }
-
-  allocation_policy {
-    location {
-      zone = "ru-central1-b"
-    }
-  }
-}
-
-resource "yandex_kubernetes_node_group" "my_node_group_c" {
-  cluster_id  = "${yandex_kubernetes_cluster.k8s-regional.id}"
-  name        = "worker-c"
-  description = "description"
-  version     = local.k8s_version
-
-  labels = {
-    "key" = "value"
-  }
-
-  instance_template {
-    platform_id = "standard-v3"
-    name = "worker-c-{instance.short_id}"
-
-    network_interface {
-      nat                = true
-      subnet_ids         = [yandex_vpc_subnet.mysubnet-c.id]
-      security_group_ids = [yandex_vpc_security_group.k8s-main-sg.id]
-    }
-
-    resources {
-      memory = 2
-      cores  = 2
-    }
-
-    boot_disk {
-      type = "network-hdd"
-      size = 32
-    }
-
-    scheduling_policy {
-      preemptible = false
-    }
-
-  }
-
-  scale_policy {
-    auto_scale {
-      min     = 1
-      max     = 3
-      initial = 1
-    }
-  }
-
-  allocation_policy {
-    location {
-      zone = "ru-central1-c"
-    }
-  }
-}
-```
-test_autoscaling.yml
-```yml
----
-### Deployment
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nginx
-  labels:
-    app: nginx
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: nginx
-  template:
-    metadata:
-      name: nginx
-      labels:
-        app: nginx
-    spec:
-      containers:
-        - name: nginx
-          image: registry.k8s.io/hpa-example
-          resources:
-            requests:
-              memory: "256Mi"
-              cpu: "500m"
-            limits:
-              memory: "500Mi"
-              cpu: "1"
----
-### Service
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx
-spec:
-  selector:
-    app: nginx
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-  type: LoadBalancer
----
-### HPA
-apiVersion: autoscaling/v1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: nginx
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: nginx
-  minReplicas: 1
-  maxReplicas: 10
-  targetCPUUtilizationPercentage: 20
-```
+- terraform apply -auto-approve - создание с автоподтверждением
+- terraform fmt - автоформатирование
+- terraform destroy -target yandex_compute_instance.nixys - уничтожение только определенного инстанса
+- .tf - файлы конфигурации
+- .tfvars - файлы переменных
+- .tfstate - файлы текущего состояния инфраструктуры
+- .terraform - скаченные провайдеры, указанный в конфигурации
+- .terraform.lock.hcl - описываются зависимости модулей и провайдеров
