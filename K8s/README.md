@@ -572,7 +572,7 @@ kubectl describle deployments.apps myapp-deployment
 меняем в манифесте image: nginx: 1.7.1
 kubectl apply -f deploy.yml
 
-kubectl set image deployment/myapp-deployment nginx=nginx:1.7.1 - обновления образа, но в манифесте останется станое
+kubectl set image deployment/myapp-deployment nginx=nginx:1.7.1 - обновления образа, но в манифесте останется старое
 ```
 Deployment при обновлении создает еще один replicaset2 и убивает поды в replicaset1, запускает их в replicaset2.
 
