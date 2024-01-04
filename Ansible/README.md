@@ -593,36 +593,8 @@ Install Apache and copy index.html
       - tree
       - sysstat
 ```
+**With_fileglob**
 ```yml
----
-- name: Install Apache and Upload my Web Page
-  hosts: all
-  become: yes
-
-  vars:
-    source_folder: ./mysite
-    destin_folder: /var/www/html
-
-  tasks:
-  - name: Check and Print Linux-Family
-    debug: var=ansible_os_family
-
-  - block: # for Debian
-
-    - name: Install Apache Web Server for Debian
-      apt: name=apache2 state=latest
-    - name: Start WebServer and make it enable for Debian
-      service: name=apache2 state=started enabled=yes
-    when: ansible_os_family == "Debian"
-
-  - block: # for RedHat
-
-    - name: Install Apache Web Server for RedHat
-      yum: name=httpd state=latest
-    - name: Start WebServer and make it enable for RedHat
-      service: name=httpd state=started enabled=yes
-    when: ansible_os_family == "RedHat"
-
   - name: Copy MyPage to Servers
 #    copy: src={{ source_folder }}/{{ item }} dest={{ destin_folder }} mode=0555 - первый вариант копирования пофайлово
 #    loop:
@@ -631,50 +603,13 @@ Install Apache and copy index.html
 #      - "2.jpg"
     copy: src={{ item }} dest={{ destin_folder }} mode=0555 # - второй вариант копирования - вся папка
     with_fileglob: "{{ source_folder }}/*.*"
-    notify:
-      - Restart Apache RedHat
-      - Restart Apache Debian
-
-  handlers:
-  - name: Restart Apache Debian
-    service: name=apache2 state=restarted
-    when: ansible_os_family == "Debian"
-
-  - name: Restart Apache RedHat
-    service: name=httpd statr=restarted
-    when: ansible_os_family == "RedHat"
 ```
 **Шаблоны - Jinja Template**
 ```yml
----
-- name: Install Apache and Upload my Web Page
-  hosts: all
-  become: yes
-
-  vars:
-    source_folder: ./website2
-    destin_folder: /var/www/html
-
-  tasks:
-  - name: Check and Print Linux-Family
-    debug: var=ansible_os_family
-
-  - block: # for Debian
-
-    - name: Install Apache Web Server for Debian
-      apt: name=apache2 state=latest
-    - name: Start WebServer and make it enable for Debian
-      service: name=apache2 state=started enabled=yes
-    when: ansible_os_family == "Debian"
-
   - name: Generate INDEX.HTML file
     template: src={{ source_folder }}/index.j2 dest={{ destin_folder }}/index.html mode=0555
     notify:
       - Restart Apache Debian
-
-  handlers:
-  - name: Restart Apache Debian
-    service: name=apache2 state=restarted
 ```
 ```html
 <HTML>
@@ -722,46 +657,6 @@ ansible-galaxy init deploy_apache_web # - называем как хотим, е
 ```
 https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html
 
-defaults/main.yml
-```yml
----
-# defaults file for deploy_apache_web
-destin_folder: /var/www/html
-```
-handlers/main.yml
-```yml
----
-# handlers file for deploy_apache_web
-- name: Restart Apache Debian
-  service: name=apache2 state=restarted
-  when: ansible_os_family == "Debian"
-
-- name: Restart Apache RedHat
-  service: name=httpd statr=restarted
-  when: ansible_os_family == "RedHat"
-```
-tasks/main.yml
-```yml
----
-# tasks file for deploy_apache_web
-- name: Check and Print Linux-Family
-  debug: var=ansible_os_family
-
-- block: # for Debian
-
-  - name: Install Apache Web Server for Debian
-    apt: name=apache2 state=latest
-  - name: Start WebServer and make it enable for Debian
-    service: name=apache2 state=started enabled=yes
-  when: ansible_os_family == "Debian"
-
-- name: Generate INDEX.HTML file
-  template: src=index.j2 dest={{ destin_folder }}/index.html mode=0555
-  notify:
-    - Restart Apache Debian
-```
-cp index.j2 templates/
-
 playbookroles.yml
 ```yml
 ---
@@ -798,7 +693,6 @@ ansible-playbook playbookvars.yml --extra-vars "MYHOSTS=server2 owner=DENIS!" # 
 ```
 include: create_folder.yml
 ```
-
 **Import** - сразу все объединяет и выполняет
 
 **Include** - когда видит файл, тогда идет и выполняет его
@@ -861,18 +755,6 @@ delegate_to: 127.0.0.1 # - выполнится только на мастер �
 ```
 playbook-delegate.yml
 ```yml
----
-- name: Play it delegate
-  hosts: all
-  become: yes
-
-  vars:
-    mytext: "Prinvet ot Joos"
-
-  tasks:
-    - name: Ping test
-      ping:
-
     - name: Unregister Server from Load Balancer
       shell: echo This sever {{ inventory_hostname }} was deregistered from our Load Balancer,  nodename is {{ ansible_nodename }} >> /home/joos/log.txt # - запишем вывод в лог
       delegate_to: 127.0.0.1 # - выполнится и запишет лог только на мастер хосте
@@ -889,14 +771,6 @@ playbook-delegate.yml
           On ENGLISH Hello World
           On RUSSIAN {{ mytext }}
       delegate_to: server1 # - выполнится только на server1
-
-    - name: Create file2
-      copy:
-        dest: /home/joos/file2.txt
-        content: |
-          This is FileN2
-          On ENGLISH Hello World
-          On RUSSIAN {{ mytext }}
 
     - name: Reboot my servers; # - Перезагружаем сервера
       shell: sleep 3 && reboot now - # - ждем 3 секунды и перезагружаем
