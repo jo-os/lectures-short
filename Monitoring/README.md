@@ -54,7 +54,6 @@
 - zabbix_server — демон сервера Zabbix
 - zabbix_server.conf — файл конфигурации Zabbix Server
 - zabbix_server.log — файл логов Zabbix Server
-
 - Следит за каждым подключённым к нему агентом и знает о них всё
 - Заносит в список все новые агенты, обратившиеся к нему впервые, и в дальнейшем следит за ними
 - Ищет новые узлы сети, отбирает их по специализированным параметрам и начинает отслеживать, что с ними происходит
@@ -110,9 +109,7 @@
 
 # Zabbix
 
-Zabbix Ansible
-
-https://github.com/ansible-collections/community.zabbix/tree/main/roles
+Zabbix Ansible - https://github.com/ansible-collections/community.zabbix/tree/main/roles
 
 **Установка Zabbix server на Debian 11**
 
@@ -141,8 +138,6 @@ sudo -u postgres createuser --pwprompt zabbix
 sudo -u postgres createdb -O zabbix zabbi
 ```
 При автоматизации с помощью bash можно использовать следующие примеры:
-
-Создание пользователя с помощью psql из-под root
 ```
 su - postgres -c 'psql --command "CREATE USER zabbix WITH PASSWORD '\'123456789\'';"'
 su - postgres -c 'psql --command "CREATE DATABASE zabbix OWNER zabbix;"
@@ -157,11 +152,9 @@ sudo nano /etc/zabbix/zabbix_server.conf
 ```
 Запускаем Zabbix server, Zabbix agent и веб-сервер:
 ```
-sudo systemctl restart zabbix-server apache2 # zabbix-agent 
-sudo systemctl enable zabbix-server apache2 # zabbix-agent
+sudo systemctl restart zabbix-server apache2 zabbix-agent 
+sudo systemctl enable zabbix-server apache2 zabbix-agent
 ```
-При автоматизации с помощью bash можно использовать следующий пример:
-
 Настраиваем пароль DBPassword в файле /etc/zabbix/zabbix_server.conf:
 ```
 sed -i 's/# DBPassword=/DBPassword=123456789/g' /etc/zabbix/zabbix_server.conf
@@ -272,17 +265,9 @@ WantedBy=multi-user.target
 chown -R prometheus:prometheus /var/lib/prometheus
 ```
 Тестирование сервиса Prometheus
-
-Пропишите автозапуск:
 ```
 sudo systemctl enable prometheus
-```
-Запустите сервис:
-```
 sudo systemctl start prometheus
-```
-Проверьте статус сервиса:
-```
 sudo systemctl status prometheus
 ```
 
@@ -326,16 +311,10 @@ ExecStart=/etc/prometheus/node-exporter/node_exporter 
 [Install] 
 WantedBy=multi-user.target
 ```
-Пропишите автозапуск:
+Пропишите автозапуск, запустите, проверьте:
 ```
 sudo systemctl enable node-exporter
-```
-Запустите сервис:
-```
 sudo systemctl start node-exporter
-```
-Проверьте статус сервиса:
-```
 sudo systemctl status node-exporter
 ```
 Добавление Node Exporter в Prometheus
@@ -347,10 +326,10 @@ nano /etc/prometheus/prometheus.yml
 Добавьте в scrape_config адрес экспортёра:
 ```
 scrape_configs: 
-— job_name: 'prometheus' 
-scrape_interval: 5s 
-static_configs: 
-— targets: ['localhost:9090', 'localhost:9100']
+  — job_name: 'prometheus' 
+    scrape_interval: 5s 
+    static_configs: 
+  — targets: ['localhost:9090', 'localhost:9100']
 ```
 Перезапустите Prometheus:
 ```
@@ -381,7 +360,7 @@ systemctl status grafana-server
 
 Программное обеспечение, которое позволяет: обрабатывать оповещения, отправляемые из клиентских приложений консолидировать эти оповещения перенаправлять их по необходимым каналам доставки сообщений
 
-Установка Alertmanager
+**Установка Alertmanager**
 
 Скачайте последнюю версию приложения с GitHub
 ```
@@ -422,16 +401,10 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 ```
-Пропишите автозапуск:
+Пропишите автозапуск, запустите, проверьте:
 ```
 sudo systemctl enable prometheus-alertmanager
-```
-Запустите сервис:
-```
 sudo systemctl start prometheus-alertmanager
-```
-Проверьте статус сервиса:
-```
 sudo systemctl status prometheus-alertmanage
 ```
 Подключение Prometheus к Alertmanager
@@ -443,10 +416,10 @@ sudo nano /etc/prometheus/prometheus.yml
 Перезапустите Prometheus:
 ```
 alerting:
-alertmanagers:
-- static_configs:
-- targets: # Можно указать как targets: [‘localhost”9093’]
-- localhost:9093
+  alertmanagers:
+    - static_configs:
+    - targets: # Можно указать как targets: [‘localhost”9093’]
+    - localhost:9093
 ```
 Приведите раздел Alertmanager configuration к виду:
 ```
