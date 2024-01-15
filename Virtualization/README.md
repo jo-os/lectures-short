@@ -66,8 +66,7 @@
 - инфраструктурные сервисы — Yandex Compute Cloud, Yandex Object Storage, Yandex Message Queue, Yandex Virtual Private Cloud и Yandex Identity and Access Management
 - платформенные сервисы — Yandex Managed Service (для различных баз данных), Yandex SpeechKit и Yandex Translate
 
-# types
-Types of virtualizations
+# Types of virtualizations
 
 **Виртуализация** — это создание изолированных окружений в рамках одного физического устройства. Каждое окружение выглядит, как отдельный компьютер со своими характеристиками (доступная память, процессор и тп.) 
 
