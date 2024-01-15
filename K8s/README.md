@@ -131,6 +131,9 @@ kubectl get po
 ```
 kubectl describe po имя_пода
 ```
+<details>
+  <summary>Deployment.yml</summary>
+  
 ```
 apiVersion: apps/v1
 kind: Deployment
@@ -154,6 +157,7 @@ spec:
         ports:
         - containerPort: 80
 ```
+</details>
 
 Аналогом docker logs в k8s является команда kubectl logs
 Пример:
@@ -182,8 +186,6 @@ https://kubernetes.io/ru/docs/home/
 - etcd
 - kube-proxy
 - kubelet
-
-**kube-api-server**
 
 **Сервер API** — компонент панели управления Kubernetes, который представляет API Kubernetes
 
@@ -399,6 +401,9 @@ kubectl get pods -o wide - польная информация от get pods
 
 **YAML для Kubernetes**
 
+<details>
+  <summary>Pod.yml</summary>
+  
 ```yml
 apiVersion: v1
 kind: Pod
@@ -413,8 +418,9 @@ spec:
     image: nginx
 #  - name: busybox - как можно создать второй контейнер
 #    image: busybox
-
 ```
+</details>
+  
 ```
 kubectl create (apply) -f pod.yml - kubernetes создаст под
 ```
@@ -437,6 +443,9 @@ Deployment - apps/v1
 **ReplicaSets**
 
 **ReplicationController** (устарел, теперь используем ReplicaSet) - контроллер репликации помогает нам запускать несколько экземпляров под в кластере kubernetes тем самым обеспечивая высокую доступность. Контроллер репликации гарантируют что указанное количество исправных под будет постоянно работать - будь это всего лишь один под или сотня. Другая причина его использование распределение нагрузки между несколькими подами.
+<details>
+  <summary>ReplicationController old</summary>
+
 ```yml
 apiVersion: v1
 kind: ReplicationController
@@ -458,12 +467,17 @@ spec:
         image: nginx
   replicas: 3
 ```
+</details>
+
 ```
 kubectl create -f rcontroller.yml
 kubectl get replicationcontroller
 kubectl get pods
 ```
 Важное отличие между ReplicationController и ReplicaSet - для ReplicaSet требуется определение селектора. Раздел селектор помогает ReplicaSet понять какие поды ему принадлежат. Потому что реплика сет также может управлять подами которые не были созданы как часть ReplicaSet
+<details>
+  <summary>Replicaset</summary>
+  
 ```yml
 apiVersion: apps/v1
 kind: ReplicaSet
@@ -488,6 +502,8 @@ spec:
     matchLabels:
       type: frontend
 ```
+</details>
+  
 ```
 kubectl create -f rset.yml
 kubectl get replicaset
@@ -515,6 +531,9 @@ kubectl delete replicaset rset.yml
 После обновления важных компонетов, нам нужен процесс который обновит контейнеры один за другим, такое обновление называется rollin update. Предположим что одно из выполненных нами обновлений привело к непредвиденной ошибке и нас попросят отменить последнее действие, нам нужна возможность откатиться от недавно внесенных изменений, наконец если нам требуется внести изменения в свою среду например пропатчить ОС ноды или изменить распределение ресурсов вкупе с масштабированием или какие то другие вещи и мы не хотим применять каждое изменение сразу после исполнения команды, а предпочитаем поставить нагрузку на паузу и произвести требуемые изменения, а затем возобновить работу чтобы все изменения развертывались вместе все эти возможности доступны в **deployment**
 
 Deployment выше в иерархии и обладает всем свойствами pod и replicaset
+<details>
+  <summary>Deployment</summary>
+  
 ```yml
 apiVersion: apps/v1
 kind: Deployment
@@ -538,6 +557,8 @@ spec:
       - name: nginx
         image: nginx
 ```
+</details>
+
 ```
 kubectl create -f deploy.yml --record  - создание (--record - добавляет в history причину изменения)
 kubectl get deployments - инфо
@@ -615,7 +636,9 @@ kubectl delete deploy myapp-deployment - удаление
 - 
 ![service](https://github.com/joos-virt/k8s3/blob/main/service.png)
 
-service.yml
+<details>
+  <summary>Service.yml</summary>
+
 ```yml
 apiVersion: v1
 kind: Service
@@ -631,6 +654,8 @@ spec:
     app: myapp
     type: frontend
 ```
+</details>
+
 ```
 kubectl create -f service.yml - создание
 kubectl get services(svc)
@@ -646,7 +671,9 @@ minikube service myapp-service --url - получаем внешний линк
 
 Группирует поды вместе и представляет единый интерфейс для обращения к этой группе. Например 3 пода backend (уровень) будет выглядеть как один со своим именем и адресом. Каждый уровень проще масштабировать или перемещать, не влияя на обмен данными между службами.
 
-clusterip.yml
+<details>
+  <summary>ClusterIP</summary>
+
 ```yml
 apiVersion: v1
 kind: Service
@@ -661,6 +688,8 @@ spec:
     app: myapp
     type: backend
 ```
+</details>
+
 После создания - служба и поды за ней будут доступны другим подам кластера используя имя службы или ее clusterIp
 
 **LoadBalancer**
@@ -668,8 +697,9 @@ spec:
 Можно использовать в большинством облачных провайдеров - получаем один внешний адрес который пересылает и балансирует трафик на внутренние ноды.
 
 Если ставим локально (VirualBox), то получим аналогию NodePort где служба доступна по порту
-
-loadbal.yml
+<details>
+  <summary>Loadbal.yml</summary>
+  
 ```yml
 apiVersion: v1
 kind: Service
@@ -684,3 +714,4 @@ spec:
     app: myapp
     type: frontend
 ```
+</details>
