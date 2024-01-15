@@ -134,7 +134,7 @@ kubectl describe po имя_пода
 <details>
   <summary>Deployment.yml</summary>
   
-```
+```yml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
