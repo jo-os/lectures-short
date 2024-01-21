@@ -680,6 +680,10 @@ docker pull localhost:5000/my-image
 ```
 Для взаимодействия по сети нужны сетрификаты
 
+**Docker Swarm**
+
+https://habr.com/ru/articles/659813/
+
 **Kubernetes**
 ```
 kubectl create deployment node --image=node:v1 - запускаем нужное
